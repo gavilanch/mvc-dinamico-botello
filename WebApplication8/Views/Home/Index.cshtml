@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model Persona
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form asp-controller="Home" asp-action="Registrar" method="post">
+    Nombre:  <input asp-for="Nombre" /> <br />
+    Apellido: <input asp-for="Apellido" /><br />
+
+    <button id="btnNuevaDireccion" type="button">Agregar nueva direccion</button>
+    <div class="direcciones">
+      
+    </div>
+
+
+    <button type="submit">Register</button>
+</form>
+
+@section scripts {
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <script id="nueva-direccion" type="text/x-handlebars-template">
+        <h3>Direccion {{i}}</h3>
+        Calle <input name="Direcciones[{{i}}].Calle" /> <br />
+        Numero <input name="Direcciones[{{i}}].Numero" /> <br />
+    </script>
+
+ <script>
+     let conteo = 0;
+     $("#btnNuevaDireccion").click(function () {
+         console.log('ckick');
+         var template = $('#nueva-direccion').html();
+         var templateScript = Handlebars.compile(template);
+         var context = { "i": conteo };
+         var html = templateScript(context);
+         $(".direcciones").append(html);
+         conteo++;
+         console.log(conteo);
+     });
+
+ </script>
+}
